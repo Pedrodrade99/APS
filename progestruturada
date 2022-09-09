@@ -1,0 +1,66 @@
+/* Desenvolver um programa em C que faça:
+1. Criar 5 vetores contendo 10 valores reais gerados aleatoriamente;
+2. Utilizar uma função recursiva para somar apenas os elementos pares de cada vetor;
+3. Retornar maior elemento do item 2;
+4. Colocar a solução no GITHUB (coloque o endereço aqui) */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+float soma_vetor(float x[], int cont);
+void numero_aleatorio(float x[]);
+
+	float soma_vetor(float x[], int cont) 
+	{
+	static float soma_auxiliar;
+	int aux;
+	
+	if (cont<10){
+		aux=x[cont];
+		if (aux%2 ==0){
+		soma_auxiliar += x[cont];
+		cont+=1;
+	soma_vetor(x, cont);
+	} else {
+		cont+=1;
+		soma_vetor(x, cont);
+	}
+    }else{
+    		aux=soma_auxiliar;
+		soma_auxiliar=0;
+		return aux;
+	}
+}
+void numero_aleatorio  (float x[]){
+	int contador=0;
+	
+	
+	for (contador; contador<=10;contador++){
+		x[contador] = rand() % 50;
+		printf("%.1f | ", x[contador]);
+		
+		
+	}
+}
+
+int main (){
+	
+float vet[10], soma = 0, soma_m = 0;
+int  i=1, vetor_m=0;	
+srand(time(NULL));
+			
+		for (i; i<=5; i+=1){	
+				printf("\n %d* Vetor: ", i);
+				numero_aleatorio(vet);
+				soma = soma_vetor(vet, 0);
+				if (soma > soma_m){
+					soma_m = soma;
+					vetor_m = i;
+				}
+				printf(" \n A soma dos numeros pares do vetor %d: %.1f\n", i, soma);
+				printf("\n-----------------------------------------------------------\n");
+		}
+		
+		printf("\n A maior soma de numero pares: \n Vetor %d:  %1.f", vetor_m, soma_m);
+}
